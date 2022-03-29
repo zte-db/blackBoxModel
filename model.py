@@ -7,6 +7,7 @@ import torch.utils.data as Data
 
 def linear_model(X, Y):
     reg = LinearRegression().fit(X, Y)
+    print("coefficients:", reg.coef_.tolist())
     return reg
 
 
@@ -26,13 +27,13 @@ class MLP(torch.nn.Module):
         return out
 
 
-def dataloader(X, Y):
+def dataloader(X, Y, batch_size = 8):
     X = torch.from_numpy(np.array(X, dtype=float)).to(torch.float32)
     Y = torch.from_numpy(np.array(Y, dtype=float)).to(torch.float32)
 
     dataset = Data.TensorDataset(X, Y)
     return Data.DataLoader(
         dataset=dataset,
-        batch_size=8,
+        batch_size=batch_size,
         shuffle=True,
     )

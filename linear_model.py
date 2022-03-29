@@ -1,22 +1,22 @@
 from sklearn import datasets
-from util import get_all_data
+from util_fcg import gen_train_test
 from model import linear_model
 import random
 from sklearn.metrics import mean_squared_error
 import pickle
 
 if __name__ == '__main__':
-    x_train, x_test, y_train, y_test = get_all_data(1)
+    train_all_x, train_all_y, train_all_fault, test_all_x, test_all_y, test_all_fault = gen_train_test()
 
-    pickle.dump([x_train, x_test, y_train, y_test],
+    pickle.dump([train_all_x, train_all_y, train_all_fault, test_all_x, test_all_y, test_all_fault],
                 open("../dataset.pkl", "wb"))
 
     
     # dataset = pickle.load(open("../dataset.pkl", "rb"))
     # print(dataset)
-    lm = linear_model(x_train, y_train)
-    pred = lm.predict(x_test)
+    lm = linear_model(train_all_x, train_all_y)
+    pred = lm.predict(test_all_x)
 
-    print("average cost err:", mean_squared_error(y_test, pred))
+    print("average cost err:", mean_squared_error(test_all_y, pred))
     print(pred[:20])
-    print(y_test[:20])
+    print(test_all_y[:20])
