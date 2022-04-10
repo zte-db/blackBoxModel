@@ -7,7 +7,7 @@ import pickle
 import numpy as np
 
 
-n_epochs = 1000
+n_epochs = 100000
 
 logger = SummaryWriter(log_dir="log")
 
@@ -15,13 +15,13 @@ logger = SummaryWriter(log_dir="log")
 
 def train(model, _dataloader):
     lossFunc = torch.nn.MSELoss()
-    optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
+    optimizer = torch.optim.Adam(model.parameters(), lr=1e-5)
     for epoch in range(n_epochs):
         train_loss = 0.0
         for x, y in _dataloader:
             optimizer.zero_grad()
             output = model(x)
-            loss = lossFunc(output, y)
+            loss = lossFunc(output.squeeze(), y)
             loss.backward()
             optimizer.step()
             train_loss += loss.item()*x.size(0)

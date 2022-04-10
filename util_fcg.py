@@ -173,7 +173,7 @@ def read_fault(file):
 
 def gen_train_test():
     rate = 0.8
-    all_data = _get_all_data(1, "/home/zte/lzd/data/sql.log")
+    all_data = _get_all_data(6, "/home/zte/lzd/data/sql.log")
     import random
     random.shuffle(all_data)
     
@@ -198,9 +198,17 @@ def _get(all_data):
 
 if __name__=='__main__':
     #print(read_fault("fault3.res"))
-    train_all_x, train_all_y, train_all_fault, test_all_x, test_all_y, test_all_fault = gen_train_test()
-    print(train_all_x[0], train_all_y[0], train_all_fault[0],
-          test_all_x[0], test_all_y[0], test_all_fault[0])
+    # train_all_x, train_all_y, train_all_fault, test_all_x, test_all_y, test_all_fault = gen_train_test()
+    # print(train_all_x[0], train_all_y[0], train_all_fault[0],
+    #       test_all_x[0], test_all_y[0], test_all_fault[0])
+    fault = read_fault("/home/zte/lzd/data/fault3.res")
+    obj = {"heavy workload":[]}
+    f = open("fault.pkl","wb")
+    for item in fault:
+        obj["heavy workload"].append(item[1:3])
+    import pickle
+    pickle.dump(obj,f)
+    f.close()
 
 
 
