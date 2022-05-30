@@ -1,5 +1,5 @@
 from sklearn import datasets
-from util_fcg import gen_train_test
+from util import gen_train_test
 from model import linear_model
 import random
 from sklearn.metrics import mean_squared_error
